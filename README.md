@@ -1,6 +1,18 @@
 # FDA 483 Semantic Tagger
 
-Reference repository for the FDA 483 semantic tagging skill and its flattened quality tag taxonomy.
+Public reference repository for an FDA 483 semantic tagging specification and its flattened quality tag taxonomy.
+
+## What This Is
+
+FDA Form 483 observations document inspection findings identified by FDA investigators. This repository defines a traceable tagging model that turns those observations into structured semantic tags so they can be normalized, explained, and matched against enterprise quality-system objects.
+
+The repository is specification-first. It contains normative documentation artifacts, not an application or service implementation.
+
+## Who This Is For
+
+- regulatory, quality, and compliance teams working with FDA 483 observations
+- knowledge engineering or enrichment teams building structured tagging pipelines
+- implementers who need a documented taxonomy for explainable matching across drug, biologic, and medical-device inspection content
 
 ## Contents
 
@@ -20,6 +32,13 @@ This repository documents a traceable tagging model for FDA 483 observations. Th
 
 The taxonomy is intended to support explainable matching workflows rather than opaque similarity-only approaches.
 
+## Status
+
+- Document type: reference specification
+- Coverage: drug, biologic, and medical-device inspection vocabulary
+- Implementation content: none in this repository beyond normative specification artifacts
+- Maintenance state: current files reflect the active v0.5 release noted in the source documents
+
 ## Current Version
 
 - Skill version: `0.5`
@@ -33,8 +52,13 @@ The taxonomy is intended to support explainable matching workflows rather than o
 2. Use the taxonomy as the authority for canonical values, aliases, value-citation anchors, and matching policy.
 3. Apply the rules in `fda_483_semantic_tagger_SKILL_v0_5.md` to extract, normalize, and score tags from FDA 483 observations.
 
+## Conformance Notes
+
+Implementations should treat the taxonomy YAML as the source of truth for canonical values and matching policy, then apply the skill document's extraction, normalization, alias-resolution, and evaluation rules. The skill document also defines golden-set evaluation expectations for validating tagging behavior.
+
 ## Repository Notes
 
 - The skill document supersedes the earlier v0.2 specification referenced in its revision history.
 - The taxonomy remains additive relative to v0.4 and preserves prior stable category values.
 - This repository currently contains the normative specification artifacts only.
+- Internal change IDs and plan references are preserved inside the source documents for traceability. They are retained as historical document metadata, not as required external dependencies.
