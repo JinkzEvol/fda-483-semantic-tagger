@@ -1,0 +1,1413 @@
+taxonomy_version: "0.5"
+name: "flattened_quality_tag_taxonomy"
+purpose: >-
+  Stable, flattened semantic ontology for tagging FDA 483 observations and enterprise
+  quality objects so they can be matched using traceable, hybrid similarity rather than
+  embeddings alone. Manufacturing-domain coverage extended in v0.3 (pharma sterile,
+  solid-dose, API, biologics). Medical-device and post-market-surveillance coverage
+  added in v0.4 per audit GXP-AUDIT-TAX-001 v1.2 — spanning legacy 21 CFR 820 QSR
+  subparts and the Quality Management System Regulation (QMSR, effective 2026-02-02,
+  incorporating ISO 13485:2016 by reference), plus 21 CFR Part 803 (MDR), Part 806
+  (Corrections and Removals), Part 807 (Establishment Registration and Listing),
+  Part 812 (IDE), Part 830 (UDI), and Part 820.45 (new QMSR labeling/packaging visual
+  verification requirement). FDCA statutory and 21 CFR Part 606/630/640 human blood
+  and plasma CGMP vocabulary also added in v0.4 per audit v1.1 §5.6 IMP-TAX-013 /
+  IMP-TAX-014. v0.5 is a corrective release that (a) completes the QSR→ISO 13485
+  conceptual alias population in aliases.control_object and aliases.process that the
+  v0.4 revision-history entry promised but did not materially deliver, (b) corrects
+  the v0.4 additions count from the v0.4 revision-history's stated 118 to the actual
+  mechanical-diff figure of 123, (c) backfills drug/biologic value_citations entries
+  in record_type and evidence_type per audit v1.1 §5.6 IMP-TAX-011 residual. v0.5
+  is strictly additive with respect to v0.4 stable_categories (no existing value is
+  removed or renamed; no alias resolves to a different target than v0.4 implied).
+
+tag_format: "category:value"
+
+normalization:
+  case: "snake_case_lower"
+  separator: ":"
+  multi_value_allowed: true
+  evidence_required: true
+  aliases_allowed: true
+  alias_write_mode_default: "propose_only"
+
+revision_history:
+  - version: "0.2"
+    date: "(prior release)"
+    summary: >-
+      Initial flattened taxonomy derived from a laboratory / data-integrity /
+      chromatographic-processing / packaging 483 case. 132 semantic+context+supportive
+      values across 11 categories plus enterprise registry categories.
+  - version: "0.3"
+    date: "2026-04-20"
+    summary: >-
+      Manufacturing-domain expansion per audit GXP-AUDIT-TAX-001. 139 new values added
+      across 9 categories (system +5, process +35, quality_theme +10, control_object +26,
+      issue_pattern +17, record_type +17, asset_type +20, evidence_type +5, risk_domain +3),
+      plus 16 new granular dosage_form values in the enterprise registry.
+      aliases dict populated for 7 legacy dosage_form values (tablet, capsule, suspension,
+      sterile_injection, cream, ointment, powder). No top-level category changes
+      (taxonomy_update_policy.top_level_category_change.allowed remains false). New optional
+      sidecar section value_citations provides authoritative anchors (CFR / USP / ICH) for
+      new values where applicable. Structure remains propose_only pending Quality Domain
+      Lead approval.
+  - version: "0.3 (draft-time remediation)"
+    date: "2026-04-20"
+    summary: >-
+      Post-remediation draft edits applied following cross-check
+      GXP-XCHECK-PH2.1-001 v1.1. v0.3 is still in propose_only mode so these changes
+      are in-draft corrections rather than a new approved version.
+      R2: added enterprise_registry_categories.dosage_form.oral_powder — brings v0.3
+      granular-dosage-form discipline to coverage of oral powders, aligning with
+      GxP Sentinel Phase 2.1 v1.2 §1.3 product_shape_tags.dosage_form_class vocabulary.
+      R3: added aliases.dosage_form.powder → oral_powder (propose_only), with note
+      permitting retag to inhalation_dpi / topical powders where evidence warrants.
+      R4: added value_citations.dosage_form.oral_powder (advisory anchor).
+      No other categories affected. Pre-remediation total 138 new semantic/context/
+      supportive values + 15 granular dosage_forms; post-remediation 138 semantic/context/
+      supportive + 16 granular dosage_forms and 7 dosage_form aliases.
+  - version: "0.4 (candidate scope; not yet drafted)"
+    date: "pending"
+    summary: >-
+      Candidate post-approval scope captured from audit v1.1 §5.6 empirical pass.
+      IMP-TAX-013: add issue_pattern:adulteration_finding and
+      issue_pattern:misbranding_finding to cover FDCA statutory violations (~6% of the
+      in-scope drug/biologic 483 corpus at audit time).
+      IMP-TAX-014: add system:blood_and_plasma_cgmp_system and adjacent vocabulary
+      for 21 CFR Part 606/630/640 blood and plasma CGMP (small but non-trivial
+      slice of current corpus). Both deferred to a Quality-Domain-Lead-scoped
+      v0.4 draft; not required for Phase 2.1 v1.2 operational scope.
+      (Note: this entry is preserved from v0.3 revision history as the historical
+      v0.4 candidate scope; actual v0.4 content — including medical devices —
+      is recorded in the subsequent entry.)
+  - version: "0.4"
+    date: "2026-04-20"
+    summary: >-
+      Medical-device, FDCA-statutory, and blood/plasma CGMP coverage expansion
+      per audit GXP-AUDIT-TAX-001 v1.2. Closes IMP-TAX-013 (FDCA statutory),
+      IMP-TAX-014 (blood/plasma CGMP), and IMP-TAX-015 (medical devices, added in
+      audit v1.2 from in-session user request). Scope this release:
+      MEDICAL DEVICES — covers both the legacy 21 CFR 820 Quality System
+      Regulation (QSR) subpart structure (used on all pre-2026-02-02 FDA 483
+      citations in the corpus) and the Quality Management System Regulation
+      (QMSR, effective 2026-02-02, which incorporates ISO 13485:2016 by reference
+      and adds §820.45 labeling/packaging visual verification). 101 new values
+      added across 9 categories for devices (system +3, process +31,
+      quality_theme +8, control_object +23, issue_pattern +13, record_type +12,
+      asset_type +6, evidence_type +3, risk_domain +2). device_class_ii-style
+      discriminators held out of this release as product-shape concerns handled
+      by downstream phase specs, not taxonomy categories. Adjacent regulations
+      covered by new values — 21 CFR Part 803 (MDR), Part 806 (Corrections and
+      Removals), Part 807 (Establishment Registration and Listing), Part 812
+      (IDE), Part 830 (UDI). QSR→ISO 13485 conceptual aliases populated in
+      aliases.control_object and aliases.process for the DHR/DMR/MDF/DHF family
+      so that historical QSR-era citations and forward QMSR-era citations share
+      a single semantic-matching layer.
+      FDCA STATUTORY — 2 new issue_pattern values
+      (adulteration_finding, misbranding_finding) plus record_type:statutory_finding.
+      BLOOD/PLASMA CGMP — 14 new values across system, process, control_object,
+      issue_pattern, record_type, asset_type.
+      Total v0.4 additions: 118 new semantic/context/supportive values. No top-level
+      category changes (taxonomy_update_policy.top_level_category_change.allowed
+      remains false). Structure remains propose_only pending Quality Domain Lead
+      approval.
+  - version: "0.5"
+    date: "2026-04-21"
+    summary: >-
+      Corrective release supplementing v0.4. No new stable_categories values are
+      added; no v0.4 value is removed or renamed; no v0.4 alias target is changed.
+      Three corrective workstreams:
+
+      C1 — QSR→ISO 13485 conceptual aliases for the Device Master Record /
+      Medical Device File pair. The v0.4 revision-history entry asserted:
+      "QSR→ISO 13485 conceptual aliases populated in aliases.control_object and
+      aliases.process for the DHR/DMR/MDF/DHF family so that historical QSR-era
+      citations and forward QMSR-era citations share a single semantic-matching
+      layer." Inspection of v0.4 showed only the existing aliases.dosage_form
+      (7 entries) and aliases.record_type (1 entry — device_master_record →
+      medical_device_file_record) populated; aliases.control_object and
+      aliases.process were absent entirely. v0.5 closes this by adding the
+      two DMR→MDF alias entries required to honour the v0.4 claim for the
+      DMR/MDF axis:
+        aliases.control_object:
+          device_master_record_control → medical_device_file_control
+        aliases.process:
+          device_master_record_maintenance → medical_device_file_maintenance
+      Both are propose_only per taxonomy_update_policy and carry disambiguation
+      notes consistent with the existing aliases.record_type.device_master_record
+      entry — the ISO 13485 §4.2.3 Medical Device File concept is a superset of
+      the QSR 21 CFR 820.181 Device Master Record concept, so citations that
+      reference §820.181 directly should retain the QSR-anchored value and
+      citations written under QMSR / ISO 13485 should use the ISO-anchored
+      value.
+
+      Scope constraint for C1. The v0.4 narrative's claim of a DHR/DMR/MDF/DHF
+      "family" is narrower in practice than the wording suggests — only DMR→MDF
+      is a genuine QSR→QMSR rename. Design History File (DHF, §820.30(j)) and
+      Device History Record (DHR, §820.184) are preserved conceptually across
+      QSR and QMSR: ISO 13485 §7.3.10 does use the wording "design and
+      development files" and §4.2.5 does address records management, but these
+      are closer to refinements of the QSR concept than renames, and v0.4 did
+      not introduce `design_and_development_files_control/_maintenance` or any
+      DHR-side ISO target values to stable_categories. v0.5 therefore matches
+      the existing v0.4 comment pattern for aliases.record_type (which explicitly
+      explains why no DHF alias is added there): DHF and DHR remain
+      first-class values without aliases. If a future release introduces
+      dedicated ISO-side target values for DHF / DHR concepts, aliases for
+      those pairs can be added without schema change. A clarifying comment is
+      added to the aliases section in v0.5 to record this decision.
+
+      The corresponding value_citations anchors for device_master_record_control
+      and device_master_record_maintenance already exist in v0.4 with dual QSR+ISO
+      cites; no change to value_citations needed for C1.
+
+      C2 — count correction. The v0.4 revision-history summary states "Total v0.4
+      additions: 118 new semantic/context/supportive values" with a device
+      breakdown of "+3 +31 +8 +23 +13 +12 +6 +3 +2 = 101" and a claimed FDCA=3
+      + blood/plasma=14 → 118. Mechanical diff between v0.3 and v0.4 stable_categories
+      (computed by set-difference in Python) yields 123 additions with a per-category
+      breakdown of: system +4, process +37, quality_theme +8, control_object +30,
+      issue_pattern +16, record_type +15, asset_type +7, evidence_type +4, risk_domain
+      +2. The v0.4 narrative did not wrong-count devices per se; it did not enumerate
+      the overlap between device, FDCA, and blood/plasma additions that share
+      values at the system / process / control_object axes, and it omitted the
+      two record_type values that serve device + blood/plasma jointly. The v0.4
+      entry is left intact above (per revision-history constitutional rule);
+      the correct mechanical figure of record is 123 for all tooling, cross-check,
+      and downstream spec references from v0.5 onward. No stable_categories or
+      value_citations content changes for C2 — it is a revision-history
+      reconciliation only.
+
+      C3 — value_citations gap-fills for audit IMP-TAX-011 residual. Audit v1.2
+      §5.3 flagged that v0.3-era drug/biologic record_type and evidence_type
+      values carried thin value_citations anchors relative to their device-side
+      equivalents. v0.5 adds anchors for five of the highest-priority
+      drug/biologic entries that (a) exist in v0.4 stable_categories,
+      (b) correspond to named regulatory or compendial concepts per
+      taxonomy_update_policy.value_citation_requirement.guidance, and (c) are
+      currently unanchored: record_type.batch_record,
+      record_type.change_control_record, record_type.validation_report_record,
+      evidence_type.validation_protocol_review,
+      evidence_type.audit_trail_review. All five entries follow the existing
+      v0.4 entry shape (CFR + ICH/USP anchor pair where available; CFR-only
+      where not). Coverage remains advisory per
+      taxonomy_update_policy.value_citation_requirement.enforcement: advisory.
+
+      Total v0.5 delta versus v0.4: 2 aliases added (1 control_object + 1 process,
+      the DMR→MDF pair); 5 value_citations entries added; 0 stable_categories
+      changes; 1 revision-history narrative correction recorded (C2);
+      1 scope-clarifying alias comment (C1 — DHF / DHR preservation). Structure
+      remains propose_only pending Quality Domain Lead approval.
+      consuming_systems additions flag the v0.5 dual-vocabulary completion for
+      fda_483_semantic_tagger_SKILL IMP-TAX-004 v0.5 uptake and for
+      GxP Sentinel Phase 2.1 v1.3 taxonomy_version gating.
+
+modeling_principles:
+  - "Keep top-level categories stable; prefer reusing existing categories."
+  - "Allow enterprise registries to grow; do not confuse registry growth with ontology drift."
+  - "Prefer canonical values over synonyms; manage synonyms as aliases."
+  - "Separate observed tags from inferred tags."
+  - "Every tag must trace back to evidence text."
+  - "Use metadata for document lifecycle, status, and recency rather than forcing them into ontology tags unless needed for matching."
+  - "New values in v0.3 onward should carry a value_citations anchor when the value corresponds to a named regulatory or compendial concept."
+
+stable_categories:
+
+  enterprise_object_type:
+    # Unchanged from v0.2
+    - site_master_file
+    - site_validation_plan
+    - local_sop
+    - global_sop
+    - quality_policy
+    - risk_control
+    - deviation
+    - capa
+    - change_control
+    - risk_assessment
+    - validation_protocol
+    - validation_report
+    - method_procedure
+    - cleaning_procedure
+    - data_integrity_procedure
+    - training_record
+    - audit_report
+
+  scope:
+    # Unchanged from v0.2
+    - global
+    - site_local
+    - site_group
+    - product_specific
+    - function_specific
+    - equipment_specific
+
+  system:
+    # v0.2 values (preserved)
+    - quality_system
+    - laboratory_control_system
+    - facility_and_equipment_system
+    - production_system
+    - packaging_and_labeling_system
+    - materials_system
+    - computerized_system
+    # v0.3 additions — manufacturing-subsystem granularity
+    - sterile_manufacturing_system
+    - api_synthesis_system
+    - biologics_manufacturing_system
+    - solid_dose_manufacturing_system
+    - environmental_monitoring_system
+    # v0.4 additions — medical device systems (QSR/QMSR era)
+    - medical_device_quality_management_system
+    - device_design_control_system
+    - device_postmarket_surveillance_system
+    # v0.4 addition — blood and plasma CGMP (21 CFR 606/630/640) per IMP-TAX-014
+    - blood_and_plasma_cgmp_system
+
+  org_unit:
+    # Unchanged from v0.2
+    - quality_unit
+    - quality_assurance
+    - quality_control
+    - qc_chemistry
+    - qc_microbiology
+    - production
+    - packaging
+    - warehouse
+    - scrapyard
+    - engineering
+    - training
+    - validation
+
+  process:
+    # v0.2 values (preserved)
+    - document_control
+    - document_retention
+    - scrap_management
+    - gmp_data_recording
+    - leak_test_execution
+    - leak_test_performance_check
+    - ph_measurement
+    - media_preparation
+    - gc_fid_analysis
+    - hplc_analysis
+    - chromatographic_processing
+    - sample_solution_preparation
+    - reference_standard_preparation
+    - blank_solution_preparation
+    - audit_trail_review
+    - deviation_investigation
+    - employee_training
+    - equipment_cleaning
+    - equipment_maintenance
+    - line_clearance
+    - packaging_operation
+    # v0.3 additions — sterile manufacturing
+    - aseptic_processing
+    - terminal_sterilization
+    - depyrogenation
+    - lyophilization
+    - sterile_filtration
+    - media_fill
+    - environmental_monitoring_execution
+    - container_closure_integrity_test
+    - particulate_monitoring
+    - endotoxin_testing
+    - sterility_testing_execution
+    - bioburden_monitoring
+    # v0.3 additions — solid-dose manufacturing
+    - blending_operation
+    - granulation
+    - compression_operation
+    - coating_operation
+    - dissolution_testing
+    - content_uniformity_testing
+    - disintegration_testing
+    - assay_testing
+    - impurity_testing
+    # v0.3 additions — API / biologics
+    - cell_bank_maintenance
+    - fermentation_operation
+    - cell_culture_operation
+    - viral_clearance_operation
+    - chromatographic_purification
+    - ultrafiltration_diafiltration
+    - formulation_buffer_preparation
+    # v0.3 additions — packaging / labelling
+    - label_reconciliation
+    - serialization_operation
+    # v0.3 additions — validation and qualification lifecycle
+    - process_validation_execution
+    - continued_process_verification
+    - cleaning_validation_execution
+    - equipment_qualification_execution
+    - computer_system_validation
+    # v0.4 additions — medical device design-control processes (21 CFR 820.30 / ISO 13485 7.3)
+    - design_planning
+    - design_input_definition
+    - design_output_generation
+    - design_review_execution
+    - design_verification
+    - design_validation
+    - design_transfer
+    - design_change_control_execution
+    - design_history_file_maintenance
+    - medical_device_file_maintenance
+    - device_master_record_maintenance
+    - device_risk_management_execution
+    - device_software_validation
+    # v0.4 additions — medical device production and acceptance (QSR subparts E, F, G, H; ISO 13485 6.3, 6.4, 7.4, 7.5)
+    - device_manufacturing_operation
+    - incoming_device_acceptance
+    - in_process_device_acceptance
+    - final_device_acceptance
+    - device_identification_marking
+    - device_udi_assignment
+    - device_traceability_assignment
+    - device_contamination_control_execution
+    - device_labeling_visual_verification
+    - device_installation_operation
+    - device_servicing_operation
+    - device_history_record_creation
+    # v0.4 additions — medical device post-market surveillance (QSR subpart N/M §820.198; 21 CFR 803, 806; ISO 13485 8.2, 8.5)
+    - device_complaint_intake
+    - device_complaint_investigation
+    - device_mdr_reportability_assessment
+    - medical_device_report_submission
+    - device_corrections_and_removals_execution
+    # v0.4 additions — medical device governance (ISO 13485 5.x / 6.x; QSR 820.20-25)
+    - management_review_execution
+    - internal_quality_audit_execution
+    # v0.4 additions — blood and plasma CGMP (21 CFR 606/630/640)
+    - donor_suitability_determination
+    - blood_collection_operation
+    - blood_component_preparation
+    - blood_product_release_testing
+    - blood_product_labeling_operation
+
+  quality_theme:
+    # v0.2 values (preserved)
+    - quality_unit_oversight
+    - good_documentation_practice
+    - data_integrity
+    - record_retention
+    - uncontrolled_records
+    - raw_data_governance
+    - metadata_governance
+    - audit_trail_governance
+    - computerized_system_controls
+    - access_control
+    - training_and_qualification
+    - procedure_adequacy
+    - investigation_effectiveness
+    - laboratory_method_suitability
+    - reference_standard_governance
+    - cleaning_effectiveness
+    - contamination_control
+    - equipment_status_control
+    - batch_record_integrity
+    - packaging_control
+    # v0.3 additions
+    - sterility_assurance
+    - aseptic_integrity
+    - environmental_control
+    - blend_uniformity
+    - content_uniformity_theme
+    - analytical_reliability
+    - stability_program_integrity
+    - supplier_quality_management
+    - material_qualification
+    - product_specification_lifecycle
+    # v0.4 additions — medical device quality themes
+    - design_control_discipline
+    - device_risk_management_theme
+    - device_traceability_theme
+    - device_postmarket_vigilance
+    - labeling_accuracy
+    - complaint_handling_timeliness
+    - device_safety_effectiveness
+    # v0.4 addition — blood/plasma donor and product integrity
+    - donor_and_product_integrity
+
+  issue_pattern:
+    # v0.2 values (preserved)
+    - record_destruction
+    - uncontrolled_note_taking
+    - missing_original_record
+    - missing_printout
+    - manual_edit_without_trace
+    - conflicting_explanations
+    - no_access_control
+    - audit_trail_gap
+    - no_stepwise_instruction
+    - employee_not_qualified
+    - employee_not_trained
+    - unqualified_reference_standard
+    - suspected_sample_standard_mixup
+    - peak_suppression
+    - unknown_peak_not_evaluated
+    - cleaning_not_effective
+    - debris_on_equipment
+    - uncapped_product_contact_port
+    - procedure_not_followed
+    - oversight_gap
+    # v0.3 additions — manufacturing-specific issue patterns
+    - environmental_excursion_unresolved
+    - media_fill_failure_not_investigated
+    - cci_failure_root_cause_unclear
+    - aseptic_intervention_undocumented
+    - blend_uniformity_failure
+    - content_uniformity_out_of_specification
+    - dissolution_failure_retest_without_investigation
+    - cold_chain_excursion_not_investigated
+    - cleaning_validation_gap
+    - process_validation_gap
+    - change_control_bypass
+    - deviation_not_escalated_to_capa
+    - capa_effectiveness_not_verified
+    - oos_investigated_inadequately
+    - batch_released_despite_deviation
+    - supplier_quality_incident_not_investigated
+    - continued_process_verification_not_performed
+    # v0.4 additions — medical device issue patterns (from empirical analysis of 149 §820 citations)
+    - design_procedures_absent_or_inadequate
+    - design_history_file_incomplete
+    - design_validation_not_performed
+    - design_change_not_documented
+    - dhr_not_adequately_maintained
+    - udi_not_in_dhr
+    - complaint_not_investigated
+    - complaint_not_evaluated_for_mdr_reportability
+    - mdr_not_submitted_timely
+    - corrections_removals_not_reported
+    - servicing_records_inadequate_device
+    - management_review_not_performed
+    - quality_audit_not_performed_or_inadequate
+    # v0.4 additions — FDCA statutory findings per IMP-TAX-013
+    - adulteration_finding
+    - misbranding_finding
+    # v0.4 addition — blood/plasma CGMP
+    - donor_record_inadequate
+
+  control_object:
+    # v0.2 values (preserved)
+    - qms_document_control
+    - gmp_recording
+    - raw_data_handling
+    - metadata_handling
+    - document_destruction_control
+    - document_retention_control
+    - instrument_access_control
+    - performance_check_execution
+    - method_instruction_detail
+    - reference_standard_qualification
+    - chromatographic_processing_rules
+    - audit_trail_review_control
+    - training_qualification_control
+    - deviation_investigation_control
+    - cleaning_execution
+    - cleaning_verification
+    - contamination_prevention
+    - packaging_record_control
+    # v0.3 additions — sterile manufacturing controls
+    - aseptic_processing_control
+    - environmental_monitoring_control
+    - container_closure_integrity_control
+    - sterility_assurance_control
+    - cross_contamination_control
+    # v0.3 additions — solid-dose manufacturing controls
+    - blending_uniformity_control
+    - compression_in_process_control
+    - dissolution_control
+    - content_uniformity_control
+    # v0.3 additions — API / biologics controls
+    - cell_bank_integrity_control
+    - viral_safety_control
+    - cold_chain_control
+    # v0.3 additions — packaging / labelling controls
+    - serialization_control
+    - label_reconciliation_control
+    # v0.3 additions — record and specification governance (complementing packaging_record_control)
+    - batch_record_control
+    - specification_control
+    # v0.3 additions — lifecycle controls
+    - change_control_execution
+    - capa_execution_control
+    - process_validation_control
+    - cleaning_validation_control
+    - equipment_qualification_control
+    - computer_system_validation_control
+    - method_validation_control
+    - stability_program_control
+    - out_of_specification_handling_control
+    - investigation_adequacy_control
+    # v0.4 additions — medical device design controls (21 CFR 820.30 / ISO 13485 7.3)
+    - design_input_control
+    - design_output_control
+    - design_verification_control
+    - design_validation_control
+    - design_review_control
+    - design_transfer_control
+    - design_change_control
+    - design_history_file_control
+    - medical_device_file_control
+    - device_master_record_control
+    - device_history_record_control
+    - device_risk_management_file_control
+    - device_software_validation_control
+    # v0.4 additions — medical device production, acceptance, identification
+    - device_acceptance_control
+    - device_identification_control
+    - device_udi_control
+    - device_traceability_control
+    - device_labeling_verification_control
+    - device_servicing_control
+    - device_installation_control
+    - device_nonconforming_material_control
+    # v0.4 additions — medical device post-market (21 CFR 803, 806)
+    - device_complaint_handling_control
+    - device_mdr_reportability_control
+    - device_corrections_removals_control
+    # v0.4 additions — medical device governance (ISO 13485 5.x / 6.x)
+    - management_review_control
+    - internal_audit_control_device
+    - management_representative_designation_control
+    # v0.4 additions — blood and plasma CGMP controls
+    - donor_screening_control
+    - blood_component_labeling_control
+    - blood_release_testing_control
+
+  record_type:
+    # v0.2 values (preserved)
+    - sop
+    - qap
+    - quality_procedure
+    - batch_record
+    - laboratory_printout
+    - raw_data
+    - metadata
+    - audit_trail
+    - chromatogram
+    - sample_set_sequence
+    - specification
+    - test_procedure
+    - training_record
+    - cleaning_record
+    - calculation_sheet
+    - uncontrolled_paper
+    - instrument_log
+    - method_verification_record
+    # v0.3 additions — manufacturing records
+    - media_fill_record
+    - environmental_monitoring_record
+    - cci_test_record
+    - lyophilization_record
+    - fill_record
+    - blending_record
+    - compression_record
+    - coating_record
+    - in_process_test_record
+    - qualification_record
+    - change_control_record
+    - capa_record
+    - out_of_specification_record
+    - stability_record
+    - serialization_record
+    - cold_chain_record
+    # v0.3 additions — lifecycle records (the record-type counterpart to
+    # enterprise_object_type:validation_report; used when a 483 cites the
+    # existence, inspection, or absence of a validation report as evidence)
+    - validation_report_record
+    # v0.4 additions — medical device records (QSR and QMSR/ISO 13485 terminology)
+    - design_history_file_record          # QSR DHF; ISO 13485 equivalent content lives in the MDF
+    - device_master_record                # QSR DMR; "device master file" in QMSR
+    - medical_device_file_record          # ISO 13485 MDF; superset concept in QMSR
+    - device_history_record               # QSR and QMSR: per-device build record (DHR)
+    - design_review_record
+    - design_verification_record
+    - design_validation_record
+    - complaint_record
+    - mdr_record                          # 21 CFR 803 Medical Device Report
+    - corrections_removals_report_record  # 21 CFR 806
+    - ide_record                          # 21 CFR 812 Investigational Device Exemption
+    - management_review_record
+    - internal_audit_record_device
+    # v0.4 addition — FDCA statutory per IMP-TAX-013
+    - statutory_finding
+    # v0.4 addition — blood/plasma CGMP per IMP-TAX-014
+    - donor_record
+
+  asset_type:
+    # v0.2 values (preserved)
+    - leak_tester
+    - ph_meter
+    - gc_fid
+    - hplc
+    - chromatography_data_system
+    - conveyor_belt
+    - packaging_equipment
+    - manufacturing_equipment
+    - product_contact_port
+    # v0.3 additions — sterile manufacturing equipment
+    - lyophilizer
+    - filling_line
+    - capping_machine
+    - isolator
+    - rabs
+    - autoclave
+    - depyrogenation_oven
+    # v0.3 additions — solid-dose manufacturing equipment
+    - blender
+    - granulator
+    - tablet_press
+    - coating_pan
+    - dissolution_apparatus
+    - disintegration_apparatus
+    # v0.3 additions — analytical / EM instrumentation
+    - endotoxin_analyzer
+    - particulate_counter
+    - environmental_monitor
+    # v0.3 additions — biologics / API equipment
+    - bioreactor
+    - chromatography_skid
+    - ultrafiltration_skid
+    # v0.3 additions — packaging / serialization
+    - serialization_station
+    # v0.4 additions — medical device asset classes
+    # (Device class in the product-taxonomy sense — Class I/II/III — is a
+    # product-shape attribute and belongs in product_shape_tags, not here;
+    # these entries describe asset classes the 483 tagger may need to refer to
+    # in narrative or asset-specific control references.)
+    - medical_device_finished_good
+    - sterile_medical_device
+    - implantable_medical_device
+    - software_as_medical_device
+    - in_vitro_diagnostic_device
+    - combination_product
+    # v0.4 addition — blood/plasma CGMP
+    - plasma_collection_container
+
+  evidence_type:
+    # v0.2 values (preserved)
+    - document_review
+    - printout_review
+    - audit_trail_review
+    - employee_statement
+    - manager_statement
+    - training_record_review
+    - cleaning_record_review
+    - walkthrough_observation
+    - scrap_bag_evidence
+    - reconstructed_document
+    - system_log_review
+    # v0.3 additions
+    - environmental_data_review
+    - in_process_result_review
+    - validation_protocol_review
+    - change_history_review
+    - capa_effectiveness_review
+    # v0.4 additions — medical device evidence types
+    - dhf_content_review
+    - dhr_content_review
+    - complaint_file_review
+    - mdr_file_review
+
+  risk_domain:
+    # v0.2 values (preserved)
+    - patient_safety
+    - product_quality
+    - data_reliability
+    - record_integrity
+    - release_decision_risk
+    - contamination_risk
+    - method_reliability
+    - testing_integrity
+    - inspection_escalation_risk
+    # v0.3 additions
+    - sterility_assurance_risk
+    - product_identity_risk
+    - supply_continuity_risk
+    # v0.4 additions — medical device risk domains
+    - device_safety_risk
+    - post_market_surveillance_risk
+
+enterprise_registry_categories:
+  site: []
+  product: []
+  dosage_form:
+    # v0.2 values (preserved; most are aliased to granular v0.3 successors via the
+    # `aliases` section below to keep existing tagged records queryable)
+    - tablet
+    - capsule
+    - oral_liquid
+    - powder
+    - granule
+    - cream
+    - ointment
+    - sterile_injection
+    - suspension
+    - ophthalmic
+    - inhalation
+    - suppository
+    # v0.3 additions — granular dosage forms to align with
+    # GxP Sentinel Phase 2.1 product_shape_tags.dosage_form_class
+    - oral_solid_tablet
+    - oral_solid_capsule
+    - oral_liquid_solution
+    - oral_liquid_suspension
+    - injectable_solution
+    - injectable_suspension
+    - injectable_lyophilized
+    - inhalation_aerosol
+    - inhalation_dpi
+    - inhalation_solution
+    - ophthalmic_solution
+    - ophthalmic_ointment
+    - otic_solution
+    - nasal_spray
+    - transdermal_system
+    - topical_cream
+    - topical_ointment
+    - topical_gel
+    - implant
+    - irrigation
+    - oral_powder
+  strength: []
+  document_id: []
+  procedure_id: []
+  instrument_id: []
+  batch_id: []
+  policy_id: []
+  sop_id: []
+  control_id: []
+  event_id: []
+  software: []
+
+aliases:
+  # v0.3: populated for the first time. Legacy dosage_form values alias to the
+  # granular v0.3 successors. Per alias_write_mode_default=propose_only, these
+  # additions are proposed and require Quality Domain Lead approval before
+  # production use. Retaining the legacy values prevents breaking previously
+  # tagged records.
+  dosage_form:
+    tablet:
+      alias_to: oral_solid_tablet
+      proposed_at: "2026-04-20"
+      approval_status: "propose_only"
+      note: "Legacy v0.2 value. New tagging should use oral_solid_tablet."
+    capsule:
+      alias_to: oral_solid_capsule
+      proposed_at: "2026-04-20"
+      approval_status: "propose_only"
+      note: "Legacy v0.2 value. New tagging should use oral_solid_capsule."
+    suspension:
+      alias_to: oral_liquid_suspension
+      proposed_at: "2026-04-20"
+      approval_status: "propose_only"
+      note: >-
+        Legacy v0.2 value. Best-effort mapping to oral_liquid_suspension.
+        Where evidence indicates an injectable suspension, retag to
+        injectable_suspension.
+    sterile_injection:
+      alias_to: injectable_solution
+      proposed_at: "2026-04-20"
+      approval_status: "propose_only"
+      note: >-
+        Legacy v0.2 value. Coarse alias to injectable_solution as a best-effort
+        default. Where evidence indicates a lyophilized or suspension formulation,
+        retag to injectable_lyophilized or injectable_suspension accordingly.
+    cream:
+      alias_to: topical_cream
+      proposed_at: "2026-04-20"
+      approval_status: "propose_only"
+      note: "Legacy v0.2 value. New tagging should use topical_cream."
+    ointment:
+      alias_to: topical_ointment
+      proposed_at: "2026-04-20"
+      approval_status: "propose_only"
+      note: >-
+        Legacy v0.2 value. Best-effort mapping to topical_ointment.
+        Where evidence indicates ophthalmic use, retag to ophthalmic_ointment.
+    powder:
+      alias_to: oral_powder
+      proposed_at: "2026-04-20"
+      approval_status: "propose_only"
+      note: >-
+        Legacy v0.2 value. Best-effort alias to oral_powder as a coarse default.
+        Where evidence indicates a non-oral powder (e.g., inhalation dry-powder
+        inhaler content, topical dusting powder), retag to inhalation_dpi or the
+        appropriate granular value. Post-remediation addition per cross-check
+        GXP-XCHECK-PH2.1-001 v1.1 §3.2 remediation R3.
+
+  # v0.4 additions — medical device QSR ↔ QMSR/ISO 13485 conceptual pairings.
+  # Purpose: the FDA's transition from the Quality System Regulation (QSR) to
+  # the Quality Management System Regulation (QMSR, effective 2026-02-02) moved
+  # citations from using QSR-specific terminology (e.g., "Device Master Record",
+  # §820.181) to using ISO 13485:2016 terminology as incorporated by reference
+  # (e.g., "Medical Device File", ISO 13485 §4.2.3). All 149 Part 820 citations
+  # in the current corpus pre-date 2026-02-02, so historical citations use QSR
+  # vocabulary. Forward citations will increasingly use QMSR vocabulary.
+  # These aliases are DELIBERATELY NOT IDENTITY MAPPINGS — they record the
+  # nearest conceptual equivalent and explicitly document the disambiguation
+  # required at tagging time. Same pattern as the legacy dosage_form aliases:
+  # propose_only by default; the Quality Domain Lead approves before production
+  # use of the alias by downstream systems.
+  record_type:
+    device_master_record:
+      alias_to: medical_device_file_record
+      proposed_at: "2026-04-20"
+      approval_status: "propose_only"
+      note: >-
+        QSR-era term (21 CFR 820.181, pre-2026-02-02). Best-effort mapping to
+        the broader ISO 13485 §4.2.3 Medical Device File concept. The MDF is a
+        superset: a DMR is narrower than an MDF in both scope and required
+        content. For citations that reference QSR §820.181 directly, retain
+        device_master_record. For QMSR-era citations or enterprise quality
+        objects authored under ISO 13485, use medical_device_file_record.
+        Per IMP-TAX-015.
+  # No control_object alias: design_history_file_record (DHF) as a record survives
+  # the QSR→QMSR transition conceptually — ISO 13485 MDF "references" the DHF
+  # content but does not supersede it — so no alias is needed. The DHF is
+  # retained as a first-class record_type in v0.4.
+
+  # v0.5 additions — honouring the v0.4 revision-history claim that
+  # QSR→ISO 13485 aliases are populated in aliases.control_object and
+  # aliases.process. Scope is narrower than the v0.4 narrative suggested: only
+  # the Device Master Record → Medical Device File pair is a genuine QSR→QMSR
+  # rename. Design History File (§820.30(j)) and Device History Record
+  # (§820.184) are preserved conceptually across QSR and QMSR (ISO 13485 §7.3.10
+  # "design and development files" and §4.2.5 records-control are refinements,
+  # not renames, and v0.4 did not introduce ISO-side target values for either);
+  # a future release can add DHF / DHR aliases when and if dedicated ISO-side
+  # targets are introduced to stable_categories. Propose_only per default.
+  control_object:
+    device_master_record_control:
+      alias_to: medical_device_file_control
+      proposed_at: "2026-04-21"
+      approval_status: "propose_only"
+      note: >-
+        QSR-era term (21 CFR 820.181 Device Master Record, pre-2026-02-02).
+        Best-effort mapping to the broader ISO 13485 §4.2.3 Medical Device File
+        concept. The MDF is a superset: a DMR is narrower than an MDF in both
+        scope and required content. For control-object references that cite
+        QSR §820.181 directly, retain device_master_record_control. For
+        QMSR-era control objects or enterprise quality objects authored under
+        ISO 13485, use medical_device_file_control. Mirrors aliases.record_type.
+        device_master_record added in v0.4 and fulfils the v0.4 revision-history
+        claim of aliases.control_object population. Per IMP-TAX-015 /
+        IMP-TAX-004 dual-vocabulary handling.
+
+  process:
+    device_master_record_maintenance:
+      alias_to: medical_device_file_maintenance
+      proposed_at: "2026-04-21"
+      approval_status: "propose_only"
+      note: >-
+        QSR-era process (21 CFR 820.181-driven DMR maintenance, pre-2026-02-02).
+        Best-effort mapping to the broader ISO 13485 §4.2.3 Medical Device File
+        maintenance process. Same breadth asymmetry as the control_object
+        counterpart: citations that reference §820.181 directly should retain
+        device_master_record_maintenance; citations authored under QMSR or
+        ISO 13485 should use medical_device_file_maintenance. Mirrors
+        aliases.control_object.device_master_record_control added in v0.5 and
+        fulfils the v0.4 revision-history claim of aliases.process population.
+        Per IMP-TAX-015 / IMP-TAX-004 dual-vocabulary handling.
+
+value_citations:
+  # Advisory anchor list for new semantic values. Enforcement is advisory per
+  # taxonomy_update_policy.value_citation_requirement.enforcement.
+  # system anchors — v0.3 initialised empty; populated in v0.4 for new systems.
+  system:
+    blood_and_plasma_cgmp_system: "21 CFR Parts 606, 630, 640"
+    device_design_control_system: "21 CFR 820.30 (pre-QMSR and QMSR-retained); ISO 13485:2016 §7.3"
+    device_postmarket_surveillance_system: "21 CFR 820.198; 21 CFR Part 803 (MDR); 21 CFR Part 806 (Corrections/Removals); ISO 13485:2016 §8.2, §8.5"
+    medical_device_quality_management_system: "21 CFR Part 820 (QMSR, effective 2026-02-02); ISO 13485:2016 (incorporated by reference)"
+  # process anchors
+  process:
+    aseptic_processing: "21 CFR 211.42; FDA Guidance for Industry Sterile Drug Products Produced by Aseptic Processing 2004"
+    assay_testing: "USP <1225> (Method Validation)"
+    bioburden_monitoring: "USP <1111>; USP <61>; USP <62>"
+    blending_operation: "21 CFR 211.110; ICH Q8(R2)"
+    blood_collection_operation: "21 CFR 606.110; 21 CFR 640 Subpart A"
+    blood_component_preparation: "21 CFR 606.120–140; 21 CFR 640 Subparts B–K"
+    blood_product_labeling_operation: "21 CFR 606.121; 21 CFR 610.60"
+    blood_product_release_testing: "21 CFR 610; 21 CFR 640"
+    cell_bank_maintenance: "ICH Q5A(R2); ICH Q5D"
+    cell_culture_operation: "ICH Q7 Section 18; ICH Q5A(R2)"
+    chromatographic_purification: "ICH Q7 Section 8"
+    cleaning_validation_execution: "FDA Guide to Inspections of Validation of Cleaning Processes 1993; PDA TR No. 29"
+    coating_operation: "21 CFR 211.110"
+    compression_operation: "21 CFR 211.110"
+    computer_system_validation: "21 CFR Part 11; GAMP 5"
+    container_closure_integrity_test: "USP <1207>"
+    content_uniformity_testing: "USP <905>"
+    continued_process_verification: "FDA Process Validation Guidance 2011 Stage 3"
+    depyrogenation: "USP <1228>; USP <85> (Endotoxin Test)"
+    design_change_control_execution: "21 CFR 820.30(i); ISO 13485:2016 §7.3.9"
+    design_history_file_maintenance: "21 CFR 820.30(j) (QSR); historical citations will persist this terminology"
+    design_input_definition: "21 CFR 820.30(c); ISO 13485:2016 §7.3.3"
+    design_output_generation: "21 CFR 820.30(d); ISO 13485:2016 §7.3.4"
+    design_planning: "21 CFR 820.30(b); ISO 13485:2016 §7.3.2"
+    design_review_execution: "21 CFR 820.30(e); ISO 13485:2016 §7.3.5"
+    design_transfer: "21 CFR 820.30(h); ISO 13485:2016 §7.3.8"
+    design_validation: "21 CFR 820.30(g); ISO 13485:2016 §7.3.7"
+    design_verification: "21 CFR 820.30(f); ISO 13485:2016 §7.3.6"
+    device_complaint_intake: "21 CFR 820.198; ISO 13485:2016 §8.2.2"
+    device_complaint_investigation: "21 CFR 820.198(d)–(f); ISO 13485:2016 §8.2.2"
+    device_contamination_control_execution: "21 CFR 820.70(e); ISO 13485:2016 §6.4.2, §7.5.2"
+    device_corrections_and_removals_execution: "21 CFR Part 806"
+    device_history_record_creation: "21 CFR 820.184 (QSR); ISO 13485:2016 §4.2.5, §7.5.1"
+    device_identification_marking: "21 CFR 820.60 (QSR); ISO 13485:2016 §7.5.8"
+    device_installation_operation: "21 CFR 820.170 (QSR); ISO 13485:2016 §7.5.3"
+    device_labeling_visual_verification: "21 CFR 820.45 (new QMSR requirement, added 2026-02-02); 21 CFR 801"
+    device_manufacturing_operation: "21 CFR 820.70 (QSR); ISO 13485:2016 §7.5"
+    device_master_record_maintenance: "21 CFR 820.181 (QSR pre-2026-02-02)"
+    device_mdr_reportability_assessment: "21 CFR 820.198(a)(3); 21 CFR 803.50"
+    device_risk_management_execution: "ISO 14971:2019; ISO 13485:2016 §7.1"
+    device_servicing_operation: "21 CFR 820.200 (QSR); ISO 13485:2016 §7.5.4"
+    device_software_validation: "21 CFR 820.70(i); IEC 62304; FDA Software Validation Guidance 2002"
+    device_traceability_assignment: "21 CFR 820.65 (QSR); ISO 13485:2016 §7.5.9"
+    device_udi_assignment: "21 CFR Part 830 (UDI); 21 CFR 801.20"
+    disintegration_testing: "USP <701>"
+    dissolution_testing: "USP <711>; USP <1092>"
+    donor_suitability_determination: "21 CFR 630.10 (human blood and plasma)"
+    endotoxin_testing: "USP <85>"
+    environmental_monitoring_execution: "USP <1116>; EU GMP Annex 1"
+    equipment_qualification_execution: "ASTM E2500; ICH Q7 Section 12"
+    fermentation_operation: "ICH Q7 Section 18; ICH Q11"
+    final_device_acceptance: "21 CFR 820.80(d); ISO 13485:2016 §8.2.5"
+    formulation_buffer_preparation: "ICH Q7; USP <1116>"
+    granulation: "21 CFR 211.110; ICH Q8(R2)"
+    impurity_testing: "ICH Q3A(R2); ICH Q3B(R2); ICH Q3D(R2)"
+    in_process_device_acceptance: "21 CFR 820.80(c); ISO 13485:2016 §8.2.5"
+    incoming_device_acceptance: "21 CFR 820.80(b); ISO 13485:2016 §7.4.3"
+    internal_quality_audit_execution: "ISO 13485:2016 §8.2.4; 21 CFR 820.22 (QSR)"
+    label_reconciliation: "21 CFR 211.125; 21 CFR 211.130"
+    lyophilization: "USP <1227>; 21 CFR 211.113"
+    management_review_execution: "ISO 13485:2016 §5.6; 21 CFR 820.20(c) (QSR)"
+    media_fill: "FDA Aseptic Processing Guidance 2004; USP <1116>"
+    medical_device_file_maintenance: "ISO 13485:2016 §4.2.3 (QMSR-era term; supersedes DMR in QMSR narrative but with broader scope)"
+    medical_device_report_submission: "21 CFR Part 803 (Subparts D, E)"
+    particulate_monitoring: "USP <788>"
+    process_validation_execution: "FDA Process Validation Guidance 2011; 21 CFR 211.100"
+    serialization_operation: "DSCSA (Pub. L. 113-54); 21 CFR Part 202"
+    sterile_filtration: "USP <1229.4>; PDA TR No. 26"
+    sterility_testing_execution: "USP <71>"
+    terminal_sterilization: "USP <1211>; ISO 11135; ISO 11137; ISO 17665"
+    ultrafiltration_diafiltration: "ICH Q7"
+    viral_clearance_operation: "ICH Q5A(R2)"
+  # quality_theme anchors
+  quality_theme:
+    analytical_reliability: "USP <1225>; ICH Q2(R1)"
+    aseptic_integrity: "FDA Aseptic Processing Guidance 2004"
+    blend_uniformity: "21 CFR 211.110; USP <905>"
+    complaint_handling_timeliness: "21 CFR 820.198; 21 CFR 803.50 (MDR 30-day)"
+    content_uniformity_theme: "USP <905>"
+    design_control_discipline: "21 CFR 820.30; ISO 13485:2016 §7.3"
+    device_postmarket_vigilance: "21 CFR 820.198; 21 CFR Part 803; 21 CFR Part 806"
+    device_risk_management_theme: "ISO 14971:2019"
+    device_safety_effectiveness: "FDCA §513; 21 CFR 820.30(f)–(g)"
+    device_traceability_theme: "21 CFR 820.65; 21 CFR Part 830 (UDI); ISO 13485:2016 §7.5.9"
+    donor_and_product_integrity: "21 CFR 606.160; 21 CFR 630; 21 CFR 640"
+    environmental_control: "USP <1116>; EU GMP Annex 1"
+    labeling_accuracy: "21 CFR 820.45 (QMSR); 21 CFR 801; 21 CFR 211.125 (drug-side analogue)"
+    material_qualification: "21 CFR 211.84; ICH Q7"
+    product_specification_lifecycle: "ICH Q6A; ICH Q6B"
+    stability_program_integrity: "ICH Q1A(R2)"
+    sterility_assurance: "USP <1211>"
+    supplier_quality_management: "ICH Q10; 21 CFR 211.84"
+  # control_object anchors
+  control_object:
+    aseptic_processing_control: "21 CFR 211.42(c); FDA Aseptic Processing Guidance 2004"
+    batch_record_control: "21 CFR 211.188"
+    blending_uniformity_control: "21 CFR 211.110; USP <905>"
+    blood_component_labeling_control: "21 CFR 606.121; 21 CFR 610.60"
+    blood_release_testing_control: "21 CFR 610; 21 CFR 640"
+    capa_execution_control: "21 CFR 211.192; ICH Q10"
+    cell_bank_integrity_control: "ICH Q5D"
+    change_control_execution: "21 CFR 211.100(b); ICH Q10"
+    cleaning_validation_control: "FDA Guide to Cleaning Validation 1993"
+    cold_chain_control: "USP <1079>"
+    compression_in_process_control: "21 CFR 211.110"
+    computer_system_validation_control: "21 CFR Part 11"
+    container_closure_integrity_control: "USP <1207>"
+    content_uniformity_control: "USP <905>"
+    cross_contamination_control: "21 CFR 211.42; 21 CFR 211.46"
+    design_change_control: "21 CFR 820.30(i); ISO 13485:2016 §7.3.9"
+    design_history_file_control: "21 CFR 820.30(j) (QSR terminology)"
+    design_input_control: "21 CFR 820.30(c); ISO 13485:2016 §7.3.3"
+    design_output_control: "21 CFR 820.30(d); ISO 13485:2016 §7.3.4"
+    design_review_control: "21 CFR 820.30(e); ISO 13485:2016 §7.3.5"
+    design_transfer_control: "21 CFR 820.30(h); ISO 13485:2016 §7.3.8"
+    design_validation_control: "21 CFR 820.30(g); ISO 13485:2016 §7.3.7"
+    design_verification_control: "21 CFR 820.30(f); ISO 13485:2016 §7.3.6"
+    device_acceptance_control: "21 CFR 820.80; ISO 13485:2016 §7.4.3, §8.2.5"
+    device_complaint_handling_control: "21 CFR 820.198; ISO 13485:2016 §8.2.2"
+    device_corrections_removals_control: "21 CFR Part 806"
+    device_history_record_control: "21 CFR 820.184; ISO 13485:2016 §4.2.5"
+    device_identification_control: "21 CFR 820.60; ISO 13485:2016 §7.5.8"
+    device_installation_control: "21 CFR 820.170; ISO 13485:2016 §7.5.3"
+    device_labeling_verification_control: "21 CFR 820.45 (new QMSR requirement); 21 CFR 801"
+    device_master_record_control: "21 CFR 820.181 (QSR pre-2026-02-02)"
+    device_mdr_reportability_control: "21 CFR 803.50; 21 CFR 820.198(a)(3)"
+    device_nonconforming_material_control: "21 CFR 820.90; ISO 13485:2016 §8.3"
+    device_risk_management_file_control: "ISO 14971:2019; ISO 13485:2016 §4.2.3"
+    device_servicing_control: "21 CFR 820.200; ISO 13485:2016 §7.5.4"
+    device_software_validation_control: "21 CFR 820.70(i); IEC 62304; FDA Software Validation Guidance 2002"
+    device_traceability_control: "21 CFR 820.65; ISO 13485:2016 §7.5.9"
+    device_udi_control: "21 CFR Part 830; 21 CFR 801.20"
+    dissolution_control: "USP <711>"
+    donor_screening_control: "21 CFR 630.10; 21 CFR 630.15"
+    environmental_monitoring_control: "USP <1116>; EU GMP Annex 1"
+    equipment_qualification_control: "ICH Q7 Section 12"
+    internal_audit_control_device: "ISO 13485:2016 §8.2.4; 21 CFR 820.22"
+    investigation_adequacy_control: "21 CFR 211.192; FDA OOS Guidance 2006"
+    label_reconciliation_control: "21 CFR 211.125"
+    management_representative_designation_control: "ISO 13485:2016 §5.5.2; 21 CFR 820.20(b)(3)"
+    management_review_control: "ISO 13485:2016 §5.6; 21 CFR 820.20(c)"
+    medical_device_file_control: "ISO 13485:2016 §4.2.3 (QMSR-era broader concept)"
+    method_validation_control: "USP <1225>; ICH Q2(R1)"
+    out_of_specification_handling_control: "FDA OOS Guidance 2006"
+    process_validation_control: "21 CFR 211.100(a); FDA Process Validation Guidance 2011"
+    serialization_control: "DSCSA; 21 CFR 211.130"
+    specification_control: "21 CFR 211.160; ICH Q6A; ICH Q6B"
+    stability_program_control: "ICH Q1A(R2)"
+    sterility_assurance_control: "USP <1211>"
+    viral_safety_control: "ICH Q5A(R2)"
+  # issue_pattern anchors
+  issue_pattern:
+    adulteration_finding: "FDCA §501 [21 U.S.C. §351] (includes §501(a)(2)(A) — failure to conform to CGMP)"
+    aseptic_intervention_undocumented: "FDA Aseptic Processing Guidance 2004"
+    batch_released_despite_deviation: "21 CFR 211.192"
+    blend_uniformity_failure: "21 CFR 211.110; USP <905>"
+    capa_effectiveness_not_verified: "ICH Q10"
+    cci_failure_root_cause_unclear: "USP <1207>; 21 CFR 211.192"
+    change_control_bypass: "21 CFR 211.100(b); ICH Q10"
+    cleaning_validation_gap: "FDA Cleaning Validation Guidance 1993"
+    cold_chain_excursion_not_investigated: "USP <1079>"
+    complaint_not_evaluated_for_mdr_reportability: "21 CFR 820.198(a)(3); 21 CFR 803.50"
+    complaint_not_investigated: "21 CFR 820.198(e)–(f); ISO 13485:2016 §8.2.2"
+    content_uniformity_out_of_specification: "USP <905>; FDA OOS Guidance 2006"
+    continued_process_verification_not_performed: "FDA Process Validation Guidance 2011 Stage 3"
+    corrections_removals_not_reported: "21 CFR 806.10"
+    design_change_not_documented: "21 CFR 820.30(i); ISO 13485:2016 §7.3.9"
+    design_history_file_incomplete: "21 CFR 820.30(j)"
+    design_procedures_absent_or_inadequate: "21 CFR 820.30(a); ISO 13485:2016 §7.3.1"
+    design_validation_not_performed: "21 CFR 820.30(g); ISO 13485:2016 §7.3.7"
+    deviation_not_escalated_to_capa: "21 CFR 211.192; ICH Q10"
+    dhr_not_adequately_maintained: "21 CFR 820.184; ISO 13485:2016 §4.2.5"
+    dissolution_failure_retest_without_investigation: "USP <711>; FDA OOS Guidance 2006"
+    donor_record_inadequate: "21 CFR 606.160; 21 CFR 630.15"
+    environmental_excursion_unresolved: "21 CFR 211.42; USP <1116>"
+    management_review_not_performed: "ISO 13485:2016 §5.6; 21 CFR 820.20(c)"
+    mdr_not_submitted_timely: "21 CFR 803.50 (30-day)"
+    media_fill_failure_not_investigated: "FDA Aseptic Processing Guidance 2004; 21 CFR 211.192"
+    misbranding_finding: "FDCA §502 [21 U.S.C. §352]"
+    oos_investigated_inadequately: "FDA OOS Guidance 2006"
+    process_validation_gap: "FDA Process Validation Guidance 2011"
+    quality_audit_not_performed_or_inadequate: "ISO 13485:2016 §8.2.4; 21 CFR 820.22"
+    servicing_records_inadequate_device: "21 CFR 820.200(b)–(d); ISO 13485:2016 §7.5.4"
+    supplier_quality_incident_not_investigated: "21 CFR 211.84; ICH Q10"
+    udi_not_in_dhr: "21 CFR 820.184(f); 21 CFR Part 830"
+  # record_type anchors — v0.3 initialised empty; populated in v0.4.
+  record_type:
+    complaint_record: "21 CFR 820.198; ISO 13485:2016 §8.2.2"
+    corrections_removals_report_record: "21 CFR Part 806"
+    design_history_file_record: "21 CFR 820.30(j) (QSR terminology)"
+    design_review_record: "21 CFR 820.30(e); ISO 13485:2016 §7.3.5"
+    design_validation_record: "21 CFR 820.30(g); ISO 13485:2016 §7.3.7"
+    design_verification_record: "21 CFR 820.30(f); ISO 13485:2016 §7.3.6"
+    device_history_record: "21 CFR 820.184; ISO 13485:2016 §4.2.5"
+    device_master_record: "21 CFR 820.181 (QSR pre-2026-02-02)"
+    donor_record: "21 CFR 606.160; 21 CFR 630.15"
+    ide_record: "21 CFR Part 812"
+    internal_audit_record_device: "ISO 13485:2016 §8.2.4; 21 CFR 820.22"
+    management_review_record: "ISO 13485:2016 §5.6"
+    mdr_record: "21 CFR Part 803"
+    medical_device_file_record: "ISO 13485:2016 §4.2.3"
+    statutory_finding: "FDCA §§501–502 [21 U.S.C. §§351–352]"
+    # v0.5 IMP-TAX-011 gap-fills for drug/biologic record_type values (audit v1.2 §5.3).
+    batch_record: "21 CFR 211.188 (Batch production and control records); 21 CFR 211.186 (Master production and control records); ICH Q7 §6.7"
+    change_control_record: "21 CFR 211.100(b); 21 CFR 820.40 (records and change control for devices); ICH Q10 §3.2.3; ICH Q7 §13"
+    validation_report_record: "21 CFR 211.100(a); FDA Guidance for Industry: Process Validation General Principles and Practices (2011); ICH Q7 §12"
+  # asset_type anchors
+  asset_type:
+    autoclave: "USP <1229.1>"
+    bioreactor: "ICH Q7 Section 18"
+    blender: "21 CFR 211.110"
+    capping_machine: "USP <1207>"
+    chromatography_skid: "ICH Q7 Section 8"
+    coating_pan: "21 CFR 211.110"
+    combination_product: "21 CFR Part 3; 21 CFR Part 4"
+    depyrogenation_oven: "USP <1228>"
+    disintegration_apparatus: "USP <701>"
+    dissolution_apparatus: "USP <711>"
+    endotoxin_analyzer: "USP <85>"
+    environmental_monitor: "USP <1116>"
+    filling_line: "FDA Aseptic Processing Guidance 2004"
+    granulator: "21 CFR 211.110"
+    implantable_medical_device: "21 CFR 860.3(d); ISO 13485:2016 §3 'implantable medical device'"
+    in_vitro_diagnostic_device: "21 CFR Part 809; 21 CFR 864–866"
+    isolator: "ISO 14644-7"
+    lyophilizer: "USP <1227>"
+    medical_device_finished_good: "21 CFR 820.3(a)"
+    particulate_counter: "USP <788>"
+    plasma_collection_container: "21 CFR 640.25; 21 CFR 606.121"
+    rabs: "ISPE Good Practice Guide: RABS"
+    serialization_station: "DSCSA"
+    software_as_medical_device: "FDA SaMD guidance; IEC 62304; IMDRF SaMD WG"
+    sterile_medical_device: "ISO 11135 (EO); ISO 11137 (radiation); ISO 17665 (moist heat)"
+    tablet_press: "21 CFR 211.110"
+    ultrafiltration_skid: "ICH Q7"
+  # evidence_type anchors — v0.3 initialised empty; populated in v0.4.
+  evidence_type:
+    complaint_file_review: "21 CFR 820.198; ISO 13485:2016 §8.2.2"
+    dhf_content_review: "21 CFR 820.30(j) (evidence: contents of design history file)"
+    dhr_content_review: "21 CFR 820.184 (evidence: contents of device history record)"
+    mdr_file_review: "21 CFR Part 803"
+    # v0.5 IMP-TAX-011 gap-fills for drug/biologic evidence_type values (audit v1.2 §5.3).
+    validation_protocol_review: "21 CFR 211.100(a); FDA Guidance for Industry: Process Validation General Principles and Practices (2011); ICH Q7 §12"
+    audit_trail_review: "21 CFR 211.68(b); 21 CFR Part 11 §11.10(e); FDA Guidance for Industry: Data Integrity and Compliance With Drug CGMP (2018)"
+  # risk_domain anchors — v0.3 initialised empty; populated in v0.4.
+  risk_domain:
+    device_safety_risk: "FDCA §513 (classification by risk); ISO 14971:2019"
+    post_market_surveillance_risk: "21 CFR 820.198; 21 CFR Part 803; 21 CFR Part 806"
+  # dosage_form anchors (granular)
+  dosage_form:
+    # Post-remediation addition per cross-check GXP-XCHECK-PH2.1-001 v1.1 §3.2 R4.
+    oral_powder: "USP <2040> Disintegration and Dissolution of Dietary Supplements (adjacent); 21 CFR 211.110 (for solid-dose CGMP applicability)"
+
+candidate_metadata_requirements:
+  # Unchanged from v0.2
+  required_minimum:
+    - object_id
+    - object_type
+    - title
+    - canonical_tags
+    - scope
+    - status
+  recommended:
+    - site
+    - product
+    - dosage_form
+    - effective_date
+    - current_version
+    - superseded_by
+    - evidence_density
+
+match_policy:
+  # Unchanged from v0.2. The match policy is deliberately taxonomy-agnostic so
+  # that vocabulary growth does not require scoring-policy changes.
+  status_weights:
+    observed: 1.0
+    inferred: 0.6
+
+  category_groups:
+    direct:
+      - site
+      - product
+      - dosage_form
+      - procedure_id
+      - sop_id
+      - instrument_id
+    semantic:
+      - system
+      - quality_theme
+      - process
+      - control_object
+      - issue_pattern
+    context:
+      - org_unit
+      - record_type
+      - asset_type
+      - scope
+    supportive:
+      - evidence_type
+      - risk_domain
+
+  scoring:
+    direct_exact_match: 5
+    semantic_match: 3
+    context_match: 2
+    supportive_match: 1
+    direct_conflict_penalty: -4
+    semantic_conflict_penalty: -2
+    has_direct_match_boost: 2
+    semantic_cluster_boost: 1
+
+  semantic_cluster_rule:
+    description: >-
+      Award semantic_cluster_boost when at least two semantic tags match and at least one
+      control_object or issue_pattern tag also matches.
+
+  direct_match_rule:
+    description: >-
+      Award has_direct_match_boost when at least one direct category has an exact shared
+      observed tag, for example site, product, procedure_id, sop_id, dosage_form, or instrument_id.
+
+  conflicts:
+    direct_conflict_categories:
+      - site
+      - product
+      - dosage_form
+      - procedure_id
+      - sop_id
+      - instrument_id
+    semantic_conflict_examples:
+      - "query process=batch_record_review vs candidate process=calibration_only"
+      - "query system=laboratory_control_system vs candidate system=facility_and_equipment_system when candidate has no cross-system scope"
+      - "query record_type=batch_record vs candidate record_type=calibration_record for workflow-specific retrieval"
+      # v0.3 examples (illustrative only — these are not rule definitions):
+      - "query process=aseptic_processing vs candidate business_operation=pack with no manufacture or sterilize — operation-filter incompatibility"
+      - "query system=sterile_manufacturing_system vs candidate system=solid_dose_manufacturing_system when no cross-system scope"
+
+  score_caps:
+    explicit_site_present_and_no_matching_site_and_not_global_scope: 3
+    explicit_product_present_and_no_matching_product: 4
+    only_inferred_matches_and_no_observed_matches: 2
+    workflow_record_type_incompatible: 3
+
+  gating_rules:
+    - id: explicit_site_gate
+      rule: >-
+        If source text contains an explicit observed site tag, candidates without the same site tag
+        and without scope:global must have their score capped.
+    - id: explicit_product_gate
+      rule: >-
+        If source text contains an explicit observed product tag, candidates without the same product
+        tag must have their score capped even if semantic overlap is strong.
+    - id: direct_identifier_priority
+      rule: >-
+        If any direct observed tag exists in source text, a candidate with a matching direct observed tag
+        must outrank candidates with semantic-only similarity unless capped by conflicts.
+    - id: workflow_compatibility_gate
+      rule: >-
+        If the candidate document's record_type or process is incompatible with the retrieval workflow,
+        cap the score even when broad quality themes overlap.
+
+  tiebreakers:
+    ordered:
+      - more_observed_shared_tags
+      - more_direct_shared_tags
+      - stronger_evidence_density
+      - current_status_over_superseded
+      - recency_if_relevant
+
+taxonomy_update_policy:
+  default_mode: propose_only
+  can_auto_add_registry_entries:
+    - site
+    - product
+    - sop_id
+    - policy_id
+    - event_id
+    - instrument_id
+    - procedure_id
+    - document_id
+    - software
+  propose_only_for_semantic_values:
+    - scope
+    - system
+    - org_unit
+    - process
+    - quality_theme
+    - issue_pattern
+    - control_object
+    - record_type
+    - asset_type
+    - evidence_type
+    - risk_domain
+  top_level_category_change:
+    allowed: false
+    override_condition: >-
+      Only propose a new top-level category when repeated tagging failures across multiple documents
+      show a structural gap that cannot be solved with existing categories.
+  value_citation_requirement:
+    # v0.3 addition
+    new_value_guidance: >-
+      New semantic values SHOULD carry a value_citations anchor referencing an
+      authoritative source (CFR section, USP chapter, ICH guideline, FDA guidance
+      document, or equivalent international authority). Missing anchors do not
+      invalidate a value but flag it as a future curation target.
+    enforcement: advisory
+  dosage_form_supersession:
+    # v0.3 addition
+    description: >-
+      Legacy dosage_form values are retained but aliased to granular successors.
+      Newly tagged records SHOULD use granular successors. Retagging of historical
+      records is discretionary and MAY be performed during batch backfill operations.
+    aliased_values:
+      - tablet
+      - capsule
+      - suspension
+      - sterile_injection
+      - cream
+      - ointment
+
+output_contract:
+  # Unchanged from v0.2. The output contract is deliberately vocabulary-agnostic.
+  required_fields:
+    - taxonomy_version_used
+    - document_metadata
+    - observation_tags
+    - document_level_tags
+    - candidate_matches
+    - taxonomy_update_proposals
+    - coverage_gaps
+
+consuming_systems:
+  # v0.3 addition — explicit cross-reference to downstream consumers.
+  # Populated to support change-impact analysis when this taxonomy is revised.
+  - system: "GxP Sentinel 483 Semantic Tagger"
+    skill_file: "fda_483_semantic_tagger_SKILL.md"
+    role: "emits observation_tags using categories declared here"
+    pipeline_version_gating: "Tagger must bump pipeline_version when taxonomy is bumped."
+    # v0.4 addition — dual-vocabulary handling note
+    v0_4_dual_vocabulary_note: >-
+      Medical device citations pre-2026-02-02 use QSR (21 CFR 820 pre-QMSR)
+      terminology — "Device Master Record" §820.181, "Device History Record"
+      §820.184, QSR subpart letters, Quality System Inspection Technique (QSIT).
+      Citations from 2026-02-02 onward use QMSR terminology — ISO 13485:2016
+      clause references, "Medical Device File" §4.2.3, Compliance Program
+      7382.850 inspection technique. The tagger MUST handle both vocabularies
+      in parallel; retagging historical QSR citations to QMSR terminology is
+      discretionary and MAY be performed during batch backfill operations.
+      Where a QSR concept aliases to a QMSR concept (e.g., DMR → MDF), the
+      `aliases.record_type` and `aliases.control_object` sections of this
+      taxonomy document the conceptual mapping with disambiguation notes.
+      Per IMP-TAX-015.
+    # v0.5 addition — aliases completion note
+    v0_5_aliases_completion_note: >-
+      v0.5 completes the population of aliases.control_object and aliases.process
+      that the v0.4 revision-history entry claimed but did not deliver (only the
+      DMR→MDF pair is materially added; DHF and DHR are preserved because they
+      are conceptually retained across the QSR→QMSR transition rather than
+      renamed). Tagger uptake of v0.5 should (a) emit DMR-family control_object
+      and process values using the v0.5 canonical targets (medical_device_file_*)
+      when the citation is written under QMSR / ISO 13485, and (b) emit the
+      QSR-anchored values (device_master_record_*) when the citation directly
+      references §820.181 — matching the existing aliases.record_type.
+      device_master_record propose_only discipline. Both sides resolve under
+      match_policy to the same conceptual target via the alias.
+      Per IMP-TAX-004 v0.5 uptake.
+  - system: "GxP Sentinel Phase 2 SPEC-105 Citation Taxonomy"
+    spec: "GXP-SYS-PH2-008 §6"
+    role: "stores observation_tags in enriched.citation_tags"
+    pipeline_version_gating: "Re-tagging of historical citations required when new values become available for concepts that were previously only captured inferentially."
+  - system: "GxP Sentinel Phase 2.1 operation_control_matrix"
+    spec: "GXP-SYS-PH2.1-001 §5.3"
+    role: "references expected_semantic_tags, expected_context_tags, expected_supportive_tags using categories declared here"
+    pipeline_version_gating: "Matrix rule authoring must match current taxonomy version."
+    # v0.4 addition — device-side matrix scope
+    v0_4_device_scope_note: >-
+      Phase 2.1 v1.2 operation_control_matrix is drug/biologic-focused. Device
+      product shapes (product_shape.molecular_class ∈ {medical_device_class_i,
+      medical_device_class_ii, medical_device_class_iii, ivd, samd,
+      combination_product}) and operation axis values (design_control,
+      device_manufacturing, device_servicing, device_postmarket_surveillance)
+      are v0.4 vocabulary but not yet wired into the matrix. Device-side matrix
+      rule authoring is Phase 2.1 v1.3 or Phase 2.2 scope (IMP-TAX-015).
+  - system: "GxP Sentinel Phase 2.1 site_control_risk_profile"
+    spec: "GXP-SYS-PH2.1-001 §5.6"
+    role: "joins expected tag bundles to observed citation tag bundles using this taxonomy's category_groups and match_policy scoring"
+    pipeline_version_gating: "Refuses to compute when expected and observed bundles were generated under different taxonomy versions until both sides are brought forward."
