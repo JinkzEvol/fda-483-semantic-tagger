@@ -260,7 +260,7 @@ stable_categories:
     - quality_agreement
     - training_material
     - periodic_quality_report
-    - product_control_startegy
+    - product_control_strategy
 
   scope:
     # Expanded per technical assessment update
@@ -311,7 +311,7 @@ stable_categories:
     - production_management
     - production_facilities_management
     - non_production_facilities_management
-    - planing_scheduling
+    - planning_scheduling
     - packaging
     - warehouse
     - scrapyard
@@ -543,7 +543,7 @@ stable_categories:
     - critical_process_parameter
     - critical_quality_attribute
     - warning_alarm
-    - crtitical_alarm
+    - critical_alarm
     - process_equipment_interlock
     - process_equipment_trip
     - process_equipment_set_point
