@@ -1,16 +1,14 @@
 # FDA 483 Semantic Tagger
 
-This repository contains reference documents for tagging FDA 483 observations with a fixed set of quality and compliance tags.
+This repository contains the active taxonomy reference for tagging FDA 483 observations with a fixed set of quality and compliance tags.
 
 ## What is here
 
-- `flattened_quality_tag_taxonomy_v0_5.yaml`: the allowed categories, values, aliases, and supporting notes
-- `fda_483_semantic_tagger_SKILL_v0_5.md`: the tagging rules that explain how to apply the taxonomy
+- `flattened_quality_tag_taxonomy_v0_6.yaml`: the active taxonomy, including allowed categories, values, aliases, revision history, and supporting notes
 
 ## In plain language
 
-Use the taxonomy file to see which tags are allowed.
-Use the skill file to decide which tags fit an observation and how to normalize them.
+Use the taxonomy file to see which tags are allowed and how they map to quality-system documents, records, controls, and processes.
 
 ## What the taxonomy covers
 
@@ -20,4 +18,4 @@ Use the skill file to decide which tags fit an observation and how to normalize 
 
 ## Repository status
 
-This is a documentation repository. It does not include an application, service, or build pipeline.
+This is a documentation repository. It retains only the README and the taxonomy YAML, and does not include an application, service, or build pipeline.

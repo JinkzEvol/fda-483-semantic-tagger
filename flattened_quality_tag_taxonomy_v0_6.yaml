@@ -1,4 +1,4 @@
-taxonomy_version: "0.5"
+taxonomy_version: "0.6"
 name: "flattened_quality_tag_taxonomy"
 purpose: >-
   Stable, flattened semantic ontology for tagging FDA 483 observations and enterprise
@@ -12,9 +12,9 @@ purpose: >-
   Part 812 (IDE), Part 830 (UDI), and Part 820.45 (new QMSR labeling/packaging visual
   verification requirement). FDCA statutory and 21 CFR Part 606/630/640 human blood
   and plasma CGMP vocabulary also added in v0.4 per audit v1.1 §5.6 IMP-TAX-013 /
-  IMP-TAX-014. v0.5 is the active working release. It includes the earlier alias and
-  value-citation corrections plus the later technical-assessment updates captured in
-  this file for scope, systems, org units, processes, record types, asset types, and
+  IMP-TAX-014. v0.6 is the active working release. It incorporates the v0.5
+  corrective release and the post-v0.5 technical-assessment updates captured in this
+  file for scope, systems, org units, processes, record types, asset types, and
   control objects.
 
 tag_format: "category:value"
@@ -192,17 +192,18 @@ revision_history:
       changes; 1 revision-history narrative correction recorded (C2);
       1 scope-clarifying alias comment (C1 — DHF / DHR preservation). Structure
       remains propose_only pending Quality Domain Lead approval.
-  - version: "0.5 (technical assessment update)"
-    date: "2026-05-04"
+  - version: "0.6"
+    date: "2026-05-05"
     summary: >-
-      Applied system technical assessment outcomes to the active v0.5 taxonomy.
-      Simplified scope granularity with market_local, market_group,
-      dosage_form_specific, manufacturing_stage_specific, and
-      material_storage_location_specific; added waste_handling_system; expanded
-      org_unit, enterprise_object_type, record_type, asset_type, and
-      control_object coverage; consolidated complaint processes to complaint_intake
-      and complaint_investigation; and removed superseded values called out by the
-      assessment.
+      Release capturing all changes made since the v0.5 release. Applied the
+      post-v0.5 technical-assessment outcomes to the taxonomy: simplified scope
+      granularity with market_local, market_group, dosage_form_specific,
+      manufacturing_stage_specific, and material_storage_location_specific;
+      added waste_handling_system; expanded org_unit, enterprise_object_type,
+      record_type, asset_type, and control_object coverage; consolidated device
+      complaint handling into complaint_intake and complaint_investigation;
+      corrected taxonomy naming; and removed the consuming_systems section and
+      other superseded values identified by the assessment.
 
 modeling_principles:
   - "Keep top-level categories stable; prefer reusing existing categories."
