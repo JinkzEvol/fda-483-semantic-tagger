@@ -395,7 +395,7 @@ The 149 Part 820 citations in the current corpus use these QSR subpart reference
 | J | §820.100 | CAPA | `control_object:capa_execution_control` |
 | L | §820.140–160 | Handling, storage, distribution, installation | `process:device_installation_operation` |
 | M | §820.180–186 | Records — **DMR/DHR** | `control_object:device_master_record_control` (alias → `medical_device_file_control`), `process:device_master_record_maintenance` (alias → `medical_device_file_maintenance`), `record_type:device_master_record` (alias → `medical_device_file_record`), `control_object:device_history_record_control`, `record_type:device_history_record` |
-| N | §820.198–200 | Complaints and servicing | `process:device_complaint_intake`, `process:device_complaint_investigation`, `process:device_mdr_reportability_assessment`, `process:device_servicing_operation` |
+| N | §820.198–200 | Complaints and servicing | `process:complaint_intake`, `process:complaint_investigation`, `process:device_mdr_reportability_assessment`, `process:device_servicing_operation` |
 | O | §820.250 | Statistical techniques | (use existing `quality_theme:analytical_reliability`) |
 
 ### QMSR Vocabulary — Primary Anchor Patterns
@@ -415,7 +415,7 @@ QMSR citations use ISO 13485:2016 clause references. Map these to the same seman
 | §7.5.4 | Servicing | `process:device_servicing_operation` |
 | §7.5.8 | Identification | `process:device_identification_marking` |
 | §7.5.9 | Traceability | `process:device_traceability_assignment` |
-| §8.2.2 | Complaint handling | `process:device_complaint_intake`, `process:device_complaint_investigation` |
+| §8.2.2 | Complaint handling | `process:complaint_intake`, `process:complaint_investigation` |
 | §8.2.4 | Internal audit | `process:internal_quality_audit_execution` |
 | §8.2.5 | Acceptance activities | `process:in_process_device_acceptance`, `process:final_device_acceptance` |
 | §8.3 | Nonconforming product | `control_object:device_nonconforming_material_control` |

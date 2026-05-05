@@ -12,14 +12,10 @@ purpose: >-
   Part 812 (IDE), Part 830 (UDI), and Part 820.45 (new QMSR labeling/packaging visual
   verification requirement). FDCA statutory and 21 CFR Part 606/630/640 human blood
   and plasma CGMP vocabulary also added in v0.4 per audit v1.1 §5.6 IMP-TAX-013 /
-  IMP-TAX-014. v0.5 is a corrective release that (a) completes the QSR→ISO 13485
-  conceptual alias population in aliases.control_object and aliases.process that the
-  v0.4 revision-history entry promised but did not materially deliver, (b) corrects
-  the v0.4 additions count from the v0.4 revision-history's stated 118 to the actual
-  mechanical-diff figure of 123, (c) backfills drug/biologic value_citations entries
-  in record_type and evidence_type per audit v1.1 §5.6 IMP-TAX-011 residual. v0.5
-  is strictly additive with respect to v0.4 stable_categories (no existing value is
-  removed or renamed; no alias resolves to a different target than v0.4 implied).
+  IMP-TAX-014. v0.5 is the active working release. It includes the earlier alias and
+  value-citation corrections plus the later technical-assessment updates captured in
+  this file for scope, systems, org units, processes, record types, asset types, and
+  control objects.
 
 tag_format: "category:value"
 
@@ -114,9 +110,7 @@ revision_history:
   - version: "0.5"
     date: "2026-04-21"
     summary: >-
-      Corrective release supplementing v0.4. No new stable_categories values are
-      added; no v0.4 value is removed or renamed; no v0.4 alias target is changed.
-      Three corrective workstreams:
+      Corrective release supplementing v0.4. Three corrective workstreams:
 
       C1 — QSR→ISO 13485 conceptual aliases for the Device Master Record /
       Medical Device File pair. The v0.4 revision-history entry asserted:
@@ -198,6 +192,17 @@ revision_history:
       changes; 1 revision-history narrative correction recorded (C2);
       1 scope-clarifying alias comment (C1 — DHF / DHR preservation). Structure
       remains propose_only pending Quality Domain Lead approval.
+  - version: "0.5 (technical assessment update)"
+    date: "2026-05-04"
+    summary: >-
+      Applied system technical assessment outcomes to the active v0.5 taxonomy.
+      Simplified scope granularity with market_local, market_group,
+      dosage_form_specific, manufacturing_stage_specific, and
+      material_storage_location_specific; added waste_handling_system; expanded
+      org_unit, enterprise_object_type, record_type, asset_type, and
+      control_object coverage; consolidated complaint processes to complaint_intake
+      and complaint_investigation; and removed superseded values called out by the
+      assessment.
 
 modeling_principles:
   - "Keep top-level categories stable; prefer reusing existing categories."
@@ -211,7 +216,7 @@ modeling_principles:
 stable_categories:
 
   enterprise_object_type:
-    # Unchanged from v0.2
+    # Expanded per technical assessment update
     - site_master_file
     - site_validation_plan
     - local_sop
@@ -224,20 +229,49 @@ stable_categories:
     - risk_assessment
     - validation_protocol
     - validation_report
-    - method_procedure
     - cleaning_procedure
     - data_integrity_procedure
     - training_record
-    - audit_report
+    - non_gxp_improvement_idea
+    - gxp_improvement_idea
+    - work_schedule
+    - production_schedule
+    - bill_of_materials
+    - template
+    - work_instruction
+    - record
+    - external_regulation
+    - external_quality_standard
+    - quality_communication
+    - customer_complaint
+    - customer_complaint_response
+    - adverse_event_report
+    - adverse_event_response
+    - external_audit_report
+    - external_audit_report_response
+    - internal_audit_report
+    - internal_audit_report_response
+    - external_risk_signal
+    - internal_risk_signal
+    - capa_closure_report
+    - quality_agreement
+    - training_material
+    - periodic_quality_report
+    - product_control_strategy
 
   scope:
-    # Unchanged from v0.2
+    # Expanded per technical assessment update
     - global
     - site_local
     - site_group
+    - market_local
+    - market_group
     - product_specific
     - function_specific
     - equipment_specific
+    - dosage_form_specific
+    - manufacturing_stage_specific
+    - material_storage_location_specific
 
   system:
     # v0.2 values (preserved)
@@ -247,6 +281,7 @@ stable_categories:
     - production_system
     - packaging_and_labeling_system
     - materials_system
+    - waste_handling_system
     - computerized_system
     # v0.3 additions — manufacturing-subsystem granularity
     - sterile_manufacturing_system
@@ -262,13 +297,18 @@ stable_categories:
     - blood_and_plasma_cgmp_system
 
   org_unit:
-    # Unchanged from v0.2
+    # Expanded per technical assessment update
     - quality_unit
     - quality_assurance
     - quality_control
     - qc_chemistry
     - qc_microbiology
-    - production
+    - manufacturing_science_technology
+    - production_operations
+    - production_management
+    - production_facilities_management
+    - non_production_facilities_management
+    - planning_scheduling
     - packaging
     - warehouse
     - scrapyard
@@ -294,11 +334,15 @@ stable_categories:
     - blank_solution_preparation
     - audit_trail_review
     - deviation_investigation
+    - complaint_intake
+    - complaint_investigation
     - employee_training
     - equipment_cleaning
     - equipment_maintenance
+    - instrument_calibration
     - line_clearance
     - packaging_operation
+    - periodic_product_quality_review
     # v0.3 additions — sterile manufacturing
     - aseptic_processing
     - terminal_sterilization
@@ -367,8 +411,6 @@ stable_categories:
     - device_servicing_operation
     - device_history_record_creation
     # v0.4 additions — medical device post-market surveillance (QSR subpart N/M §820.198; 21 CFR 803, 806; ISO 13485 8.2, 8.5)
-    - device_complaint_intake
-    - device_complaint_investigation
     - device_mdr_reportability_assessment
     - medical_device_report_submission
     - device_corrections_and_removals_execution
@@ -495,6 +537,13 @@ stable_categories:
     - document_destruction_control
     - document_retention_control
     - instrument_access_control
+    - critical_process_parameter
+    - critical_quality_attribute
+    - warning_alarm
+    - critical_alarm
+    - process_equipment_interlock
+    - process_equipment_trip
+    - process_equipment_set_point
     - performance_check_execution
     - method_instruction_detail
     - reference_standard_qualification
@@ -615,6 +664,28 @@ stable_categories:
     # enterprise_object_type:validation_report; used when a 483 cites the
     # existence, inspection, or absence of a validation report as evidence)
     - validation_report_record
+    - production_batch_record
+    - production_master_batch_record
+    - certificate_analysis_materials
+    - certificate_analysis_product
+    - batch_release_record
+    - batch_release_checklist
+    - batch_status_change_record
+    - product_movement_record
+    - product_movement_quality_record
+    - manufacturing_environment_quality_record
+    - manufacturing_work_instruction
+    - manufacturing_work_template
+    - manufacturing_work_record
+    - quality_work_instruction
+    - quality_work_template
+    - quality_work_record
+    - gxp_engineering_work_instruction
+    - gxp_engineering_work_template
+    - gxp_engineering_work_record
+    - process_historian_record
+    - dcs_process_design_spec
+    - equipment_configuration_spec
     # v0.4 additions — medical device records (QSR and QMSR/ISO 13485 terminology)
     - design_history_file_record          # QSR DHF; ISO 13485 equivalent content lives in the MDF
     - device_master_record                # QSR DMR; "device master file" in QMSR
@@ -641,9 +712,19 @@ stable_categories:
     - gc_fid
     - hplc
     - chromatography_data_system
+    - process_instrument
+    - distributed_control_system
     - conveyor_belt
     - packaging_equipment
     - manufacturing_equipment
+    - reverse_osmosis_skid
+    - impurity_removal_equipment
+    - phase_change_separation_equipment
+    - process_condition_change_equipment
+    - material_combining_equipment
+    - material_transfer_equipment
+    - material_separation_equipment
+    - product_contact_safety_equipment
     - product_contact_port
     # v0.3 additions — sterile manufacturing equipment
     - lyophilizer
@@ -947,8 +1028,8 @@ value_citations:
     design_transfer: "21 CFR 820.30(h); ISO 13485:2016 §7.3.8"
     design_validation: "21 CFR 820.30(g); ISO 13485:2016 §7.3.7"
     design_verification: "21 CFR 820.30(f); ISO 13485:2016 §7.3.6"
-    device_complaint_intake: "21 CFR 820.198; ISO 13485:2016 §8.2.2"
-    device_complaint_investigation: "21 CFR 820.198(d)–(f); ISO 13485:2016 §8.2.2"
+    complaint_intake: "21 CFR 820.198; ISO 13485:2016 §8.2.2"
+    complaint_investigation: "21 CFR 820.198(d)–(f); ISO 13485:2016 §8.2.2"
     device_contamination_control_execution: "21 CFR 820.70(e); ISO 13485:2016 §6.4.2, §7.5.2"
     device_corrections_and_removals_execution: "21 CFR Part 806"
     device_history_record_creation: "21 CFR 820.184 (QSR); ISO 13485:2016 §4.2.5, §7.5.1"
